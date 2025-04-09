@@ -7,70 +7,67 @@
 Для каждого объекта вызвать метод Area (нахождение площади) и вывести на экран все свойства каждого из объектов.
 '''
 
-import math
 from abc import ABC, abstractmethod
+import math
 
-
-class AbsFigure(ABC):
+class Figure(ABC):
     @abstractmethod
-    def area():
-        pass    
+    def area(self):
+        pass
 
+class Quadrilateral(Figure):
+    @abstractmethod
+    def diagonal_length(self):
+        pass
 
-class Triangle(AbsFigure):
-    def __init__(self, base, height):
-        self.base = base
-        self.height = height
-
-
-class Quadrilateral(AbsFigure):
-    def __init__(self, length, height):
-        self.length = length
-        self.height = height
-    
-
+class Triangle(Figure):
+    pass
 
 class Square(Quadrilateral):
     def __init__(self, side):
         self.side = side
-
+    
     def area(self):
         return self.side ** 2
-
+    
+    def diagonal_length(self):
+        return math.sqrt(2) * self.side
+    
     def print_properties(self):
-        print(f"Квадрат: side = {self.side}, площадь = {self.area()}")
-
+        print(f"Квадрат со стороной {self.side} и площадью {self.area()}")
 
 class IsoscelesTriangle(Triangle):
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
+    
     def area(self):
         return 0.5 * self.base * self.height
     
     def print_properties(self):
-        print(f"Равнобедренный Треугольник: основание = {self.base}, высота = {self.height}, площадь = {self.area()}")
-
+        print(f"Равнобедренный треугольник с основанием {self.base}, высотой {self.height} и площадью {self.area()}")
 
 class RightTriangle(Triangle):
-    def __init__(self, leg1, leg2):
-        self.leg1 = leg1
-        self.leg2 = leg2
-
+    def __init__(self, leg_a, leg_b):
+        self.leg_a = leg_a
+        self.leg_b = leg_b
+    
     def area(self):
-        return 0.5 * self.leg1 * self.leg2
-
+        return 0.5 * self.leg_a * self.leg_b
+    
     def print_properties(self):
-        print(f"Прямоугольный треугольник: катет1 = {self.leg1}, катет2 = {self.leg2}, площадь = {self.area()}")
-
+        print(f"Прямоугольный треугольник с катетами {self.leg_a} и {self.leg_b} и площадью {self.area()}")
 
 class EquilateralTriangle(Triangle):
     def __init__(self, side):
-        super().__init__(side, (math.sqrt(3) / 2) * side)
-
+        self.side = side
+    
     def area(self):
-        return (math.sqrt(3) / 4) * (self.base ** 2)
-
+        return (math.sqrt(3) / 4) * self.side ** 2
+    
     def print_properties(self):
-        print(f"Равносторонний Треугольник: основание = {self.base}, площадь = {self.area()}")
-
+        print(f"Равносторонний треугольник с стороной {self.side} и площадью {self.area()}")
+    
 
 # Создание объектов
 figures = [
@@ -82,4 +79,3 @@ figures = [
 
 for figure in figures:
     figure.print_properties()
-
