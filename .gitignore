@@ -1,0 +1,4 @@
+.venv/
+.vscode/
+__pycache__/
+renpy-8.3.7-sdk/
